@@ -29,10 +29,11 @@ let currentSlide = 0;
 let lastSlide = Date.now();
 const autoSlideInterval = 10000;
 
-let $firstTestimonialImage = document.querySelector(".first-testimonial-image");
-let $secondTestimonialImage = document.querySelector(
-  ".second-testimonial-image"
+let $prevTestimonialImage = document.querySelector(".prev-testimonial-image");
+let $currentTestimonialImage = document.querySelector(
+  ".current-testimonial-image"
 );
+let $nextTestimonialImage = document.querySelector(".next-testimonial-image");
 const $testimonialAuthor = document.querySelector(".testimonial-author");
 const $testimonialPosition = document.querySelector(".testimonial-position");
 
