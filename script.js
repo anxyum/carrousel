@@ -29,27 +29,28 @@ let currentSlide = 0;
 let lastSlide = Date.now();
 const autoSlideInterval = 10000;
 
-let $prevTestimonialImage = document.querySelector(".prev-testimonial-image");
-let $currentTestimonialImage = document.querySelector(
-  ".current-testimonial-image"
+let $firstTestimonialImage = document.querySelector(".first-testimonial-image");
+let $secondTestimonialImage = document.querySelector(
+  ".second-testimonial-image"
 );
-let $nextTestimonialImage = document.querySelector(".next-testimonial-image");
 const $testimonialAuthor = document.querySelector(".testimonial-author");
 const $testimonialPosition = document.querySelector(".testimonial-position");
-
-$nextTestimonialImage.style.left = "100%";
-$currentTestimonialImage.style.left = "0";
-$prevTestimonialImage.style.left = "-100%";
 
 const $nextArrow = document.querySelector(".next-arrow");
 const $prevArrow = document.querySelector(".prev-arrow");
 
 function next() {
+  if (Date.now() - lastSlide < 500) {
+    return;
+  }
   currentSlide = (currentSlide + 1) % slides.length;
   updateNextSlide();
 }
 
 function prev() {
+  if (Date.now() - lastSlide < 500) {
+    return;
+  }
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   updatePrevSlide();
 }
@@ -62,46 +63,36 @@ function updateSlide() {
 
 function updateNextSlide() {
   updateSlide();
-  $nextTestimonialImage.style.display = "block";
-  $currentTestimonialImage.display = "block";
-  $nextTestimonialImage.style.left = "100%";
-  $currentTestimonialImage.style.left = "0";
+  $secondTestimonialImage.style.left = "100%";
+  $secondTestimonialImage.style.display = "block";
+  $secondTestimonialImage.src = slides[currentSlide].imgPath;
+  $firstTestimonialImage.style.left = "0";
   setTimeout(() => {
-    $nextTestimonialImage.src = slides[currentSlide].imgPath;
-    $currentTestimonialImage.style.left = "-100%";
-    $nextTestimonialImage.style.left = "0";
+    $secondTestimonialImage.style.left = "0";
+    $firstTestimonialImage.style.left = "-100%";
+    const temp = $firstTestimonialImage;
+    $firstTestimonialImage = $secondTestimonialImage;
+    $secondTestimonialImage = temp;
     setTimeout(() => {
-      $currentTestimonialImage.style.display = "none";
-      $currentTestimonialImage.src = slides[currentSlide].imgPath;
-      $currentTestimonialImage.style.left = "0";
-      setTimeout(() => {
-        $currentTestimonialImage.style.display = "block";
-        $nextTestimonialImage.style.display = "none";
-        $nextTestimonialImage.style.left = "100%";
-      }, 500);
+      $secondTestimonialImage.style.display = "none";
     }, 500);
   }, 0);
 }
 
 function updatePrevSlide() {
   updateSlide();
-  $prevTestimonialImage.style.display = "block";
-  $currentTestimonialImage.display = "block";
-  $prevTestimonialImage.style.left = "-100%";
-  $currentTestimonialImage.style.left = "0";
+  $secondTestimonialImage.style.left = "-100%";
+  $secondTestimonialImage.style.display = "block";
+  $secondTestimonialImage.src = slides[currentSlide].imgPath;
+  $firstTestimonialImage.style.left = "0";
   setTimeout(() => {
-    $prevTestimonialImage.src = slides[currentSlide].imgPath;
-    $currentTestimonialImage.style.left = "100%";
-    $prevTestimonialImage.style.left = "0";
+    $secondTestimonialImage.style.left = "0";
+    $firstTestimonialImage.style.left = "100%";
+    const temp = $firstTestimonialImage;
+    $firstTestimonialImage = $secondTestimonialImage;
+    $secondTestimonialImage = temp;
     setTimeout(() => {
-      $currentTestimonialImage.style.display = "none";
-      $currentTestimonialImage.src = slides[currentSlide].imgPath;
-      $currentTestimonialImage.style.left = "0";
-      setTimeout(() => {
-        $currentTestimonialImage.style.display = "block";
-        $prevTestimonialImage.style.display = "none";
-        $prevTestimonialImage.style.left = "-100%";
-      }, 500);
+      $secondTestimonialImage.style.display = "none";
     }, 500);
   }, 0);
 }
